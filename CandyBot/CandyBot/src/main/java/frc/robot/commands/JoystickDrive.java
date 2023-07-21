@@ -36,10 +36,10 @@ SpinSubsystem spinSubsystem;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double ySpeed = -(Math.abs(joystick.getY())*joystick.getY()) * 0.5;
-    double xSpeed = Math.abs(joystick.getX()) * joystick.getX();
+    double ySpeed = (Math.abs(joystick.getRawAxis(2))*joystick.getRawAxis(2)) * 0.5;
+    double xSpeed = Math.abs(joystick.getRawAxis(1)) * joystick.getRawAxis(1);
     driveTrain.drive(ySpeed, xSpeed);
-    spinSubsystem.setTopMotor(joystick.getTwist());
+    spinSubsystem.setTopMotor(joystick.getRawAxis(5) * 0.6);
   }
 
   // Called once the command ends or is interrupted.

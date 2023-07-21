@@ -27,7 +27,7 @@ public class SpinSubsystem extends SubsystemBase {
 
   public void setTopMotor(double Speed){
 
-    topMotor.set(ControlMode.PercentOutput, Speed);
+    topMotor.set(ControlMode.PercentOutput, -Speed);
     
     
     

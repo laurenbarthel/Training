@@ -32,7 +32,7 @@ public class DriveTrain extends SubsystemBase {
 
   public void drive(double forwardSpeed, double rotationalSpeed){
     leftMotor.set(TalonSRXControlMode.PercentOutput, forwardSpeed, DemandType.ArbitraryFeedForward, rotationalSpeed);
-    rightMotor.set(TalonSRXControlMode.PercentOutput, forwardSpeed, DemandType.ArbitraryFeedForward, -rotationalSpeed);
+    rightMotor.set(TalonSRXControlMode.PercentOutput, Math.min(Math.abs(forwardSpeed) * 1.4, 1) * Math.signum(forwardSpeed), DemandType.ArbitraryFeedForward, -rotationalSpeed);
     
 
   }

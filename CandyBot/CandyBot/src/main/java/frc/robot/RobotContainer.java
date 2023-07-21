@@ -24,8 +24,9 @@ public class RobotContainer {
  private final DriveTrain driveTrain = new DriveTrain();
  private final SpinSubsystem spinSubsystem = new SpinSubsystem();
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  Joystick joystick = new Joystick(0);
-  private final JoystickDrive joystickDrive = new JoystickDrive(driveTrain, spinSubsystem, joystick);
+  // Joystick joystick = new Joystick(0);
+  Joystick controller = new Joystick(2);
+  private final JoystickDrive joystickDrive = new JoystickDrive(driveTrain, spinSubsystem, controller);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
