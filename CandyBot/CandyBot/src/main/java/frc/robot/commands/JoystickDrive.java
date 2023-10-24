@@ -3,11 +3,13 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
+import javax.swing.Spring;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.SpinSubsystem;
+
 
 public class JoystickDrive extends CommandBase {
   /** Creates a new JoystickDrive. */
@@ -17,6 +19,9 @@ public class JoystickDrive extends CommandBase {
   DriveTrain driveTrain;
 
   SpinSubsystem spinSubsystem;
+
+
+
 
   public JoystickDrive(DriveTrain driveTrain, SpinSubsystem spinSubsystem, Joystick joystick) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -36,10 +41,16 @@ public class JoystickDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double ySpeed = (Math.abs(joystick.getRawAxis(2))*joystick.getRawAxis(2)) * 0.5;
-    double xSpeed = Math.abs(joystick.getRawAxis(1)) * joystick.getRawAxis(1);
-    driveTrain.drive(ySpeed, xSpeed);
-    spinSubsystem.setTopMotor(joystick.getRawAxis(5) * 0.6);
+    double leftSpeed = joystick.getRawAxis(1) * -0.5;
+    double rightSpeed = joystick.getRawAxis(5)* -0.7;
+    driveTrain.drive(leftSpeed, rightSpeed);
+    if(joystick.getRawButton(6)){
+      spinSubsystem.setTopMotor(-0.6);
+    }else if(joystick.getRawButton(1)) {
+      spinSubsystem.setTopMotor(0.6);
+    }else{
+      spinSubsystem.setTopMotor(0);
+    }
   }
 
   // Called once the command ends or is interrupted.

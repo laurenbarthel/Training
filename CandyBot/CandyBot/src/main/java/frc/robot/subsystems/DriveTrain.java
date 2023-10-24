@@ -7,6 +7,8 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveTrain extends SubsystemBase {
@@ -14,25 +16,30 @@ public class DriveTrain extends SubsystemBase {
 
   private TalonSRX leftMotor = new TalonSRX(1);
   private TalonSRX rightMotor = new TalonSRX(2);
+  private TalonSRX topMotor = new TalonSRX(3);
+
 
 
   
 
   public DriveTrain() {
+    topMotor.configFactoryDefault();
     leftMotor.configFactoryDefault();
     rightMotor.configFactoryDefault();
     rightMotor.setInverted(true);
+
 
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+
   }
 
-  public void drive(double forwardSpeed, double rotationalSpeed){
-    leftMotor.set(TalonSRXControlMode.PercentOutput, forwardSpeed, DemandType.ArbitraryFeedForward, rotationalSpeed);
-    rightMotor.set(TalonSRXControlMode.PercentOutput, Math.min(Math.abs(forwardSpeed) * 1.4, 1) * Math.signum(forwardSpeed), DemandType.ArbitraryFeedForward, -rotationalSpeed);
+  public void drive(double leftSpeed, double rightSpeed){
+    leftMotor.set(TalonSRXControlMode.PercentOutput, leftSpeed);
+    rightMotor.set(TalonSRXControlMode.PercentOutput, rightSpeed);
     
 
   }
