@@ -6,48 +6,41 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.SpinSubsystem;
+import frc.robot.subsystems.Drivetrain;
 
 public class JoystickDrive extends CommandBase {
   /** Creates a new JoystickDrive. */
 
+  Drivetrain drivetrain;
   Joystick joystick;
 
-  DriveTrain driveTrain;
-
-  SpinSubsystem spinSubsystem;
-
-  public JoystickDrive(DriveTrain driveTrain, SpinSubsystem spinSubsystem, Joystick joystick) {
+  public JoystickDrive(Drivetrain drivetrain, Joystick joystick) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(driveTrain);
+    addRequirements(drivetrain);
 
-    addRequirements(spinSubsystem);
-
+    this.drivetrain = drivetrain;
     this.joystick = joystick;
-    this.driveTrain = driveTrain;
-    this.spinSubsystem = spinSubsystem;
+
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double ySpeed = (Math.abs(joystick.getRawAxis(2))*joystick.getRawAxis(2)) * 0.5;
-    double xSpeed = Math.abs(joystick.getRawAxis(1)) * joystick.getRawAxis(1);
-    driveTrain.drive(ySpeed, xSpeed);
-    spinSubsystem.setTopMotor(joystick.getRawAxis(5) * 0.6);
+    double leftspeed = joystick.getY() + joystick.getX();
+    double rightSpeed = joystick.getY() - joystick.getX();
+
+    drivetrain.drive(leftspeed, rightSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
-    driveTrain.drive(0,0); 
-    
+    drivetrain.stop();
   }
 
   // Returns true when the command should end.
