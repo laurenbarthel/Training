@@ -5,9 +5,12 @@
 package frc.robot;
 
 import frc.robot.commands.JoystickDrive;
+import frc.robot.commands.SideMotorControl;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.SpinSubsystem;
+import frc.robot.subsystems.motorontheside;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.MotorSafety;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -20,6 +23,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+  motorontheside motorsonside = new motorontheside();
+  Joystick joystick = new Joystick(1);
   // The robot's subsystems and commands are defined here...
  private final DriveTrain driveTrain = new DriveTrain();
  private final SpinSubsystem spinSubsystem = new SpinSubsystem();
@@ -27,11 +32,13 @@ public class RobotContainer {
   // Joystick joystick = new Joystick(0);
   Joystick controller = new Joystick(3);
   private final JoystickDrive joystickDrive = new JoystickDrive(driveTrain, spinSubsystem, controller);
+  SideMotorControl sideMotorControl = new SideMotorControl(motorsonside, controller);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
-    driveTrain.setDefaultCommand(joystickDrive);
+    // driveTrain.setDefaultCommand(sidemotors);
+    motorsonside.setDefaultCommand(sideMotorControl);
   }
 
   /**
